@@ -36,7 +36,7 @@ grep Time | tr ',' '.' | awk  '{ print "'"$3"'" ","'$1'","'$2'"," $2 }' >> $ENTR
 mv -f $ENTRIES ${ENTRIES}_$(date +%s) 2> /dev/null
 touch $ENTRIES
 
-for algo in bf aes128 aes192 aes256 3des aes256 ; do
+for algo in bf aes128 aes192 aes256 3des ; do
 	/usr/lib/sysstat/sadc -S XALL 1 50 ${SARFILE}_$algo &
 	pid_sadc=$!
 	for ca in $(seq 0 2) ; do   # compress-algo = 2 is Zlib with CRCs and metadata, should not affect the current test
