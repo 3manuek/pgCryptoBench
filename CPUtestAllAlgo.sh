@@ -7,6 +7,10 @@ SARFILE=${DATAFOLDER}/sacfile
 ENTRIES=${DATAFOLDER}/stats.csv
 THREADS=$(lscpu | awk '/^CPU\(s\):/ {print $2}')
 
+# For the sar output.
+LC_ALL=C
+S_TIME_FORMAT=ISO
+
 
 function execSQL ()
 {
@@ -61,4 +65,9 @@ for algo in bf aes128 aes192 aes256 3des ; do
 	done
 
 	kill $pid_sadc >& /dev/null
+done
+
+# Added to convert into kSar format.
+for i in $(ls ${SARFILE}* ); do
+	LC_ALL=C sar -A -f $i >> "${i}_ksar"
 done
