@@ -40,4 +40,9 @@ plooooot <- ggplot(data = byAlgoMinMax, aes(x = Algorithm, y = Mean, fill = Algo
 plooooot + geom_bar(stat = "identity", position = dodge) +
   geom_errorbar(limits, position = dodge, width = 0.25) +
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
-        axis.title.x=element_blank())
+        axis.title.x=element_blank()) +
+  labs(x = "Algorithms", y = "Execution time") + 
+  ggtitle("Min/Max raw execution times by algorithms, with no filtering")
+
+
+
