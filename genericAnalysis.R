@@ -26,11 +26,11 @@ byAlgoCompLevel <- group_by(benchTimes,Algorithm, Level)
 comp <- summarize(filter(byAlgoCompLevel, Level == 1 || Level == 2) , mean(Execution_Time))
 
 filteringByCompression <- filter(byType, Level == 1 || Level == 2)
-compCompression <- summarize(filteringByCompression, 
+compCompression <- summarize(filteringByCompression,
                              min(Execution_Time) , max(Execution_Time))
 
 
-# Graphing Algorithms by Min Max with no filters (Comp and No compression included)  
+# Graphing Algorithms by Min Max with no filters (Comp and No compression included)
 limits <- aes(ymax = byAlgoMinMax$Max,
               ymin = byAlgoMinMax$Min)
 dodge <- position_dodge(width = 0.9)
@@ -41,8 +41,5 @@ plooooot + geom_bar(stat = "identity", position = dodge) +
   geom_errorbar(limits, position = dodge, width = 0.25) +
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(),
         axis.title.x=element_blank()) +
-  labs(x = "Algorithms", y = "Execution time") + 
-  ggtitle("Min/Max raw execution times by algorithms, with no filtering")
-
-
-
+  labs(x = "Algorithms", y = "Execution time") +
+  ggtitle("Execution time by algorithm")
