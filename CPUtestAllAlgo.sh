@@ -23,7 +23,7 @@ function execSQL ()
 \timing
 select
 convert_from(pgp_sym_decrypt_bytea(pgp_sym_encrypt_bytea((\$\$Text to be encrypted using pgp_sym_decrypt_bytea\$\$::bytea
-|| ((gen_random_uuid())::text)::bytea), 'key'::text, 'compress-algo=$1, compress-level=$2, cipher-algo=$3'::text), 'key'::text), 'SQL-ASCII'::name) from generate_series(1,10000);
+|| ((gen_random_uuid())::text)::bytea), 'key'::text, 'compress-algo=$1, compress-level=$2, cipher-algo=$3'::text), 'key'::text), 'SQL-ASCII'::name) from generate_series(1,1000);
 EOF
 grep Time | tr ',' '.' | awk  '{ print "'"$3"'" ","'$1'","'$2'"," $2 }' >> $ENTRIES  &
 
@@ -41,7 +41,7 @@ mv -f $ENTRIES ${ENTRIES}_$(date +%s) 2> /dev/null
 touch $ENTRIES
 
 for algo in bf aes128 aes192 aes256 3des ; do
-	/usr/lib/sysstat/sadc -S XALL 1 50 ${SARFILE}_$algo &
+	LC_ALL=C /usr/lib/sysstat/sadc -S XALL 1 50 ${SARFILE}_$algo &
 	pid_sadc=$!
 	for ca in $(seq 0 2) ; do   # compress-algo = 2 is Zlib with CRCs and metadata, should not affect the current test
 		if [ $ca -eq 0 ]
@@ -53,13 +53,14 @@ for algo in bf aes128 aes192 aes256 3des ; do
 			done
 			continue
 		fi
-	  for lev in $(seq 0 9) ; do
+	  for lev in $(seq 1 4 9) ; do
 				#echo "Benchmarking $algo with $ca, level $lev"
 				execSQL $ca $lev $algo $PGDB $THREADS
 				while [ $(psql -Upostgres -h172.17.0.2 -tnA -c 'select count(*) from pg_stat_activity where application_name ~ $$test$$') -gt 0 ]
 				do
 						sleep 1
 				done
+				#sync && echo 3 > /proc/sys/vm/drop_caches
 		done
 
 	done

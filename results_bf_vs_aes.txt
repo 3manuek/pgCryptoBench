@@ -1,0 +1,54 @@
+3laptop pgCryptoBench # pgbench -h 172.17.0.2 -Upostgres -c 50 -t 200 -f pgbench_aes128.sql aes_test
+starting vacuum...end.
+transaction type: Custom query
+scaling factor: 1
+query mode: simple
+number of clients: 50
+number of threads: 1
+number of transactions per client: 200
+number of transactions actually processed: 10000/10000
+latency average: 0.000 ms
+tps = 163.439446 (including connections establishing)
+tps = 163.446519 (excluding connections establishing)
+
+
+
+3laptop pgCryptoBench # pgbench -h 172.17.0.2 -Upostgres  -c 50 -t 200 -f pgbench_bf.sql bf_test
+starting vacuum...end.
+transaction type: Custom query
+scaling factor: 1
+query mode: simple
+number of clients: 50
+number of threads: 1
+number of transactions per client: 200
+number of transactions actually processed: 10000/10000
+latency average: 0.000 ms
+tps = 155.485785 (including connections establishing)
+tps = 155.491927 (excluding connections establishing)
+
+
+3laptop pgCryptoBench # pgbench -h 172.17.0.2 -Upostgres -c 70 -t 200 -f pgbench_aes128.sql aes_test
+starting vacuum...end.
+transaction type: Custom query
+scaling factor: 1
+query mode: simple
+number of clients: 70
+number of threads: 1
+number of transactions per client: 200
+number of transactions actually processed: 14000/14000
+latency average: 0.000 ms
+tps = 159.957806 (including connections establishing)
+tps = 159.961177 (excluding connections establishing)
+
+3laptop pgCryptoBench # pgbench -h 172.17.0.2 -Upostgres  -c 70 -t 200 -f pgbench_bf.sql bf_test
+starting vacuum...end.
+transaction type: Custom query
+scaling factor: 1
+query mode: simple
+number of clients: 70
+number of threads: 1
+number of transactions per client: 200
+number of transactions actually processed: 14000/14000
+latency average: 0.000 ms
+tps = 153.926661 (including connections establishing)
+tps = 153.930408 (excluding connections establishing)
