@@ -1,4 +1,4 @@
-# A brief pgcrypto ebnchmark using pgbench
+# A brief pgcrypto benchmark using pgbench
 
 > Key user here is a generic GPG key.
 
